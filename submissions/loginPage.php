@@ -56,7 +56,7 @@ if (!isset($userEmail)) {
         unset($_SESSION['loggedIn']);
         ?>
         <html>
-            <!REPLACE THE CODE HERE WITH YOUR CODE FOR THE ERROR PAGE>
+            <!--REPLACE THE CODE HERE WITH YOUR CODE FOR THE ERROR PAGE!-->
             <body>
                 <h1> Access Denied </h1>
 
