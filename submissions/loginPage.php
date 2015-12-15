@@ -114,6 +114,7 @@ if (!isset($userEmail)) {
         unset($_SESSION['userEmail']);
         unset($_SESSION['loggedIn']);
         ?>
+<<<<<<< HEAD
 		<div class="title">
 			<h2>Access Denied</h2>
 		</div>
@@ -123,6 +124,19 @@ if (!isset($userEmail)) {
 				<a href="<?= $_SERVER['PHP_SELF'] ?>">here</a>. To register for instant
 				access, click <a href="signUp.php">here</a>.</p>
 		</div>
+=======
+        <html>
+            <!--REPLACE THE CODE HERE WITH YOUR CODE FOR THE ERROR PAGE!-->
+            <body>
+                <h1> Access Denied </h1>
+
+                <p>Your user ID or password is incorrect, or you are not a
+                    registered user on this site. To try logging in again, click
+                    <a href="<?= $_SERVER['PHP_SELF'] ?>">here</a>. To register for instant
+                    access, click <a href="signUp.php">here</a>.</p>
+            </body>
+        </html>
+>>>>>>> origin/master
         <?php
         exit;
     }else{
