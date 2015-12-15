@@ -77,11 +77,14 @@ if (isset($_POST['submit'])) {
 	$fileName = preg_replace("/\./", "_".$currtime.".", $fileName);
 	echo($fileName);
 	//error("");
+	
+	$subject = mysqli_real_escape_string($link, $_POST["subject"]);
+	$name = mysqli_real_escape_string($link, $_POST["name"]);
     $sql = "INSERT INTO papers SET
          filename = '$fileName',
-         subject = '$_POST[subject]',
+         subject = '$subject',
          author = '$_SESSION[userEmail]',
-		 name = '$_POST[name]',
+		 name = '$name',
 		 time = '$currtime'";
     $result = mysqli_query($link, $sql);
 
