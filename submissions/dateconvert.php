@@ -33,8 +33,9 @@
 					}
 					if($key=="filename"){
 						$val = "<a href='../papers/$val'>$val</a>";
+                        $val = substr($val, 0, strrpos($val, '_'));
 					}
-					echo("<td>$val</td>");
+					echo("<td style= 'padding: 0px 10px;'>$val</td>");
 				}unset($val);
 				echo("</tr>");								
 				//var_dump($rows[$i]);

@@ -57,15 +57,15 @@ if(!isset($_SESSION["userEmail"])){
 if (isset($_POST['submit'])) {
     session_start();
     $link = dbConnect('Research');
-    $directory = "../papers/";
+    $directory = "../papers";
     $fileName = basename($_FILES["paper"]["name"]);
 	
     //error($_SESSION['userEmail']);
 
-	var_dump($_POST);
-	var_dump($_SESSION);
-	echo("FILES");
-	var_dump($_FILES);
+	//var_dump($_POST);
+    //var_dump($_SESSION);
+	//echo("FILES");
+	//var_dump($_FILES);
 	//error("");
 
     if ($_FILES["paper"]["name"] == '') {
@@ -73,9 +73,10 @@ if (isset($_POST['submit'])) {
     } else if ($_POST["subject"] === '') {
         error("You didn\'t specify a subject");
     }
-	$currtime = time();
-	$fileName = preg_replace("/\./", "_".$currtime.".", $fileName);
-	echo($fileName);
+    $currtime = date('Y-m-d G:i:s');
+    $time = date('G:i:s');
+	$fileName = preg_replace("/\./", "_".$time.".", $fileName);
+	//echo($fileName);
 	//error("");
 	
 	$subject = mysqli_real_escape_string($link, $_POST["subject"]);
@@ -84,8 +85,8 @@ if (isset($_POST['submit'])) {
          filename = '$fileName',
          subject = '$subject',
          author = '$_SESSION[userEmail]',
-		 name = '$name',
-		 time = '$currtime'";
+		 title = '$name',
+		 timestamp = '$currtime'";
     $result = mysqli_query($link, $sql);
 
     if (!$result) {
@@ -94,13 +95,12 @@ if (isset($_POST['submit'])) {
 
 //Checks to see if file type is proper. 
     $okExtensions = array('doc', 'txt', 'docx', 'rtf', 'pdf');
-    $fileName = $_FILES["paper"]["name"];
-	$fileName = preg_replace("/\./", "_".$currtime.".", $fileName);
+    $currtime = time();
     $fileExtension = explode('.', $fileName);
 
     if (in_array(strtolower(end($fileExtension)), $okExtensions)) {
 
-        if (move_uploaded_file($_FILES['paper']['tmp_name'], $directory . $fileName)) {
+        if (move_uploaded_file($_FILES['paper']['tmp_name'], $directory . '/' . $fileName)) {
             //Completion message can remove after testing maybe
 			//echo("Oh hey this happens");
             
@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
 			<input type="hidden" name="MAX_FILE_SIZE" value="4194304?>" />
 			<table>
 				<tr>
-					<td class="fieldName">Name</td>
+					<td class="fieldName">Title</td>
 					<td class="formBox"><input type="text" name="name" size="8" /></td>
 				</tr>
 				<tr>

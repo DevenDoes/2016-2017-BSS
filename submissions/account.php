@@ -7,13 +7,6 @@ session_start();
 if(!isset($_SESSION["userEmail"])){
 	header("Location: upload.php");
 }
-/*
-echo("POST<br />");
-var_dump($_POST);
-echo("<br />");
-echo("SESSION<br />");
-var_dump($_SESSION);
-echo("<br />");*/
 
 $link = dbConnect("Research");
 ?>
@@ -87,7 +80,7 @@ $link = dbConnect("Research");
 								error('A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact spencer16a@ncssm.edu');
 							}
 							//var_dump($result);
-							maketable($result, ["filename", "subject", "time"]);
+							maketable($result, ["filename", "subject", "timestamp"]);
 							$num_papers = mysqli_num_rows($result);
 							//var_dump($rows);
 							

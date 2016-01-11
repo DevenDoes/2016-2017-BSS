@@ -109,6 +109,7 @@ else {
               email = '$email'";
       $result = mysqli_query($link, $sql);
     if (!$result) {
+        error(mysql_error());
         error('A database error occurred in processing your '.
         'submission.\nIf this error persists, please '.
         'contact spencer16a@ncssm.edu');
