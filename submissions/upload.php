@@ -88,12 +88,17 @@ if (isset($_POST['submit'])) {
 
 	$subject = mysqli_real_escape_string($link, $_POST["subject"]);
 	$name = mysqli_real_escape_string($link, $_POST["name"]);
+  $mentorEmail = mysqli_real_escape_string($link, $_POST["mentorEmail"]);
+  $category = mysqli_real_escape_string($link, $_POST["category"]);
+
     $sql = "INSERT INTO papers SET
          filename = '$fileName',
          subject = '$subject',
          author = '$_SESSION[userEmail]',
 		    title = '$name',
-		    timestamp = '$currtime'";
+		    timestamp = '$currtime',
+        mentorEmail = '$mentorEmail',
+        category = '$category'";
     $result = mysqli_query($link, $sql);
 
     if (!$result) {
@@ -172,6 +177,20 @@ if (isset($_POST['submit'])) {
 				<tr>
 					<td class="fieldName">Subject</td>
 					<td class="formBox"><input type="text" name="subject" SIZE="8" /></td>
+				</tr>
+        <tr>
+					<td class="fieldName">Mentor's Email</td>
+					<td class="formBox"><input type="text" name="mentorEmail" SIZE="8" /></td>
+				</tr>
+        <tr>
+					<td class="fieldName">Category</td>
+					<td class="dropDown">
+            <select name="category">
+              <option value="originalResearchPaper">Original Research Paper</option>
+              <option value="literatureReview">Literature Review</option>
+              <option value="scientificEssay">Scientific Essay</option>
+            </select>
+          </td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="file" name="paper" class="form-control" id="file" /></td>
