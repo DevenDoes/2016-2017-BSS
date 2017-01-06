@@ -48,6 +48,8 @@
 include 'connect.php';
 include 'errors.php';
 
+error_reporting(E_ALL);
+
 session_start();
 
 
@@ -57,9 +59,9 @@ if(!isset($_SESSION["userEmail"])){
 if (isset($_POST['submit'])) {
     session_start();
     $link = dbConnect('Research');
-    $directory = "../papers";
+    $directory = 'C:\File_Storage\Local\Coding\Tools\Xampp\htdocs\Broad-Street-Scientific\papers';
     $fileName = basename($_FILES["paper"]["name"]);
-	
+
     //error($_SESSION['userEmail']);
 
 	//var_dump($_POST);
@@ -73,37 +75,68 @@ if (isset($_POST['submit'])) {
     } else if ($_POST["subject"] === '') {
         error("You didn\'t specify a subject");
     }
+    if($_FILES["paper"]["error"] > 0)
+    {
+      echo $_FILES["paper"]["error"];
+
+    }
     $currtime = date('Y-m-d G:i:s');
-    $time = date('G:i:s');
+    $time = date('Gis');
 	$fileName = preg_replace("/\./", "_".$time.".", $fileName);
 	//echo($fileName);
 	//error("");
-	
+
 	$subject = mysqli_real_escape_string($link, $_POST["subject"]);
 	$name = mysqli_real_escape_string($link, $_POST["name"]);
     $sql = "INSERT INTO papers SET
          filename = '$fileName',
          subject = '$subject',
          author = '$_SESSION[userEmail]',
-		 title = '$name',
-		 timestamp = '$currtime'";
+		    title = '$name',
+		    timestamp = '$currtime'";
     $result = mysqli_query($link, $sql);
 
     if (!$result) {
-        error('A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact spencer16a@ncssm.edu');
+        error('1 A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact spencer16a@ncssm.edu');
     }
 
-//Checks to see if file type is proper. 
+//Checks to see if file type is proper.
     $okExtensions = array('doc', 'txt', 'docx', 'rtf', 'pdf');
     $currtime = time();
     $fileExtension = explode('.', $fileName);
 
     if (in_array(strtolower(end($fileExtension)), $okExtensions)) {
 
-        if (move_uploaded_file($_FILES['paper']['tmp_name'], $directory . '/' . $fileName)) {
+        echo $_FILES['paper']['tmp_name'];
+        echo $directory . '/' . $fileName;
+        if (file_exists($_FILES['paper']['tmp_name']))
+        {
+          echo "file";
+
+        }
+        if (file_exists($directory))
+        {
+          echo $directory;
+
+        }
+
+        var_dump($_FILES);
+
+        if(is_writeable('C:\File_Storage\Local\Coding\Tools\Xampp\htdocs\Broad-Street-Scientific\papers'))
+        {
+          echo "WRITE1";
+        }
+        if(is_writeable('C:\File_Storage\Local\Coding\Tools\Xampp\tmp'))
+        {
+          echo "WRITE2";
+        }
+
+        $newDir = $directory . '/' . $fileName;
+
+        if (move_uploaded_file($_FILES['paper']['tmp_name'], $newDir)) {
             //Completion message can remove after testing maybe
-			//echo("Oh hey this happens");
-            
+			         echo("Oh hey this happens");
+
 			//unset($_POST["submit"]);
 			header("Location: success.php");
 			?>
@@ -143,10 +176,18 @@ if (isset($_POST['submit'])) {
 				<tr>
 					<td colspan="2"><input type="file" name="paper" class="form-control" id="file" /></td>
 				</tr>
+        <tr>
+					<td><input type="checkbox" name="agreement1"  id="agreement1" required/></td>
+          <td>I certify that	I	have discussed this	submission with	the	scientists with	whom I worked	and	they do	not	have concerns	regarding	intellectual property.</td>
+				</tr>
+        <tr>
+					<td><input style="margin-top: 20px; margin-bottom: 20px;" type="checkbox" name="agreement2"  id="agreement2" required/></td>
+          <td>I certify that everyone who has closely or loosely advised me, contributed to my research or had any small influence on my work, has been acknowledged.</td>
+				</tr>
 			</table>
 			<input id="submitButton" name="submit" type="submit" value="Submit" />
 		</form>
-		
+
 		<p>Logged in as <?php echo($_SESSION["userEmail"]); ?><br /><a href="logout.php">Logout?</a></p>
 	</div>
     <?php
