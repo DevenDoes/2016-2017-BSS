@@ -28,9 +28,6 @@
 					if(!in_array($key, $fields)){
 						continue;
 					}
-					if($key=="time"){
-						$val = convert_date($val);
-					}
 					if($key=="filename"){
 						$val = "<a href='../papers/$val'>$val</a>";
                         $val = substr($val, 0, strrpos($val, '_'));

@@ -8,7 +8,7 @@ if(!isset($_SESSION["userEmail"])){
 	header("Location: upload.php");
 }
 
-$link = dbConnect("Research");
+$link = dbConnect("bss");
 ?>
 
 
@@ -63,34 +63,34 @@ $link = dbConnect("Research");
                     </div>
                     <div class="content">
                         <p>You're logged in as <?php echo($_SESSION["userEmail"]); ?></p>
-						
+
 						<?php
 							if($_SESSION["editor"]){
 								echo("<p>Click <a href='editor.php'>here</a/> to access the editor page, you lucky duck!</p>");
 							}
 								?>
-								
-						
+
+
 						<?php
 							$userEmail = $_SESSION["userEmail"];
-							$sql = "SELECT * FROM papers WHERE 
+							$sql = "SELECT * FROM papers WHERE
 							author = '$userEmail'";
 							$result = mysqli_query($link, $sql);
 							if (!$result) {
-								error('A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact spencer16a@ncssm.edu');
+								error('A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact delosreyes17m@ncssm.edu');
 							}
 							//var_dump($result);
-							maketable($result, ["filename", "subject", "timestamp"]);
+							maketable($result, array("filename", "subject", "timestamp"));
 							$num_papers = mysqli_num_rows($result);
 							//var_dump($rows);
-							
+
 							echo("<p> You've submitted $num_papers paper(s)");
 						?>
-						
+
 						<p>Submit more <a href="upload.php">here</a></p>
 						<a href="logout.php">Logout?</a>
-						
-						
+
+
                     </div>
                 </div>
             </section>
@@ -99,5 +99,3 @@ $link = dbConnect("Research");
         <script src="../js/mobile-nav.js"></script>
     </body>
 </html>
-
-

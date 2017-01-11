@@ -58,8 +58,8 @@ if(!isset($_SESSION["userEmail"])){
 }
 if (isset($_POST['submit'])) {
     session_start();
-    $link = dbConnect('Research');
-    $directory = 'C:\File_Storage\Local\Coding\Tools\Xampp\htdocs\Broad-Street-Scientific\papers';
+    $link = dbConnect('bss');
+    $directory = '..\papers';
     $fileName = basename($_FILES["paper"]["name"]);
 
     //error($_SESSION['userEmail']);
@@ -112,30 +112,6 @@ if (isset($_POST['submit'])) {
 
     if (in_array(strtolower(end($fileExtension)), $okExtensions)) {
 
-        echo $_FILES['paper']['tmp_name'];
-        echo $directory . '/' . $fileName;
-        if (file_exists($_FILES['paper']['tmp_name']))
-        {
-          echo "file";
-
-        }
-        if (file_exists($directory))
-        {
-          echo $directory;
-
-        }
-
-        var_dump($_FILES);
-
-        if(is_writeable('C:\File_Storage\Local\Coding\Tools\Xampp\htdocs\Broad-Street-Scientific\papers'))
-        {
-          echo "WRITE1";
-        }
-        if(is_writeable('C:\File_Storage\Local\Coding\Tools\Xampp\tmp'))
-        {
-          echo "WRITE2";
-        }
-
         $newDir = $directory . '/' . $fileName;
 
         if (move_uploaded_file($_FILES['paper']['tmp_name'], $newDir)) {
@@ -167,7 +143,7 @@ if (isset($_POST['submit'])) {
 		<h2>Upload</h2>
 	</div>
 	<div class="content">
-		<form class="loginForm" method="post" action="<?= $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
+		<form class="loginForm" method="post" action="<?php $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
 			<input type="hidden" name="MAX_FILE_SIZE" value="4194304?>" />
 			<table>
 				<tr>

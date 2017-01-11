@@ -9,7 +9,7 @@ if(!isset($_SESSION["editor"]) || !$_SESSION["editor"]){
 	header("Location: account.php");
 }
 
-$link = dbConnect("Research");
+$link = dbConnect("bss");
 ?>
 
 <html lang="en">
@@ -63,17 +63,17 @@ $link = dbConnect("Research");
 					<div class="content">
 						<?php
 							$userEmail = $_SESSION["userEmail"];
-							
+
 							$sql = "SELECT * FROM papers";
 							$result = mysqli_query($link, $sql);
 							if (!$result) {
 								error('A database error occurred in processing your ' . 'submission.\nIf this error persists, please ' . 'contact spencer16a@ncssm.edu');
 							}
 							//var_dump($result);
-							maketable($result, ["name", "filename", "author", "subject", "time"]);
+							maketable($result, array("title", "filename", "category", "author", "subject", "mentorEmail", "timestamp"));
 						?>
 						<p><a href="account.php">Account</a></p>
-					</div>	
+					</div>
                 </div>
             </section>
         </main>

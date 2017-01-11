@@ -94,7 +94,7 @@ else {
     if (!$result) {
         error('A database error occurred in processing1 your '.
         'submission.\nIf this error persists, please '.
-        'contact spencer16a@ncssm.edu');
+        'contact delosreyes17m@ncssm.edu');
     }
 
     //Username already exists
@@ -112,7 +112,7 @@ else {
         error(mysql_error());
         error('A database error occurred in processing your '.
         'submission.\nIf this error persists, please '.
-        'contact spencer16a@ncssm.edu');
+        'contact delosreyes17m@ncssm.edu');
     }
   
     ?>

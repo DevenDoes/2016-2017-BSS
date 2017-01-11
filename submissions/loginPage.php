@@ -72,7 +72,7 @@ if (!isset($userEmail)) {
 		<p>You must log in to access this area of the site. If you are
 		not a registered user, <a href="signUp.php">click here</a>
 		to sign up</p>
-		<form class="loginForm" method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
+		<form class="loginForm" method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
 			<table>
 				<tr>
 					<td class="fieldName">Email</td>
@@ -86,13 +86,13 @@ if (!isset($userEmail)) {
 			<input id="submitButton" type="submit" value="Log in!" />
 		</form>
 	</div>
-                
+
     <?php
     exit();
 } else if (!isset($_SESSION['loggedIn']) && isset($userEmail)):
     //Sets the session variables of the username and password
     //TODO: Probably needs better login validation
-    $link = dbConnect("Research");
+    $link = dbConnect("bss");
     $email = mysqli_real_escape_string($link, $_POST["userEmail"]);
     $password = mysqli_real_escape_string($link, $_POST["userPassword"]);
     $_SESSION['userEmail'] = $email;
@@ -106,7 +106,7 @@ if (!isset($userEmail)) {
     $result = mysqli_query($link, $sql);
 
     if (!$result) {
-        error('A database error occurred while checking your ' . 'login details.\nIfhis error persists, please ' . 'contact spencer16a@ncssm.edu');
+        error('A database error occurred while checking your ' . 'login details.\nIfhis error persists, please ' . 'contact delosreyes17m@ncssm.edu');
     }
 
     //Username and or password is incorrect
@@ -128,6 +128,7 @@ if (!isset($userEmail)) {
     }else{
 		$returnval = mysqli_fetch_array($result);
 		$_SESSION["editor"] = intval($returnval["editor"]);
+        $_SESSION["admin"] = intval($returnval["admin"]);
 		//error($_SESSION["editor"]);
 		header("Location: account.php");
 	}

@@ -19,6 +19,8 @@ CREATE TABLE `papers` (
   `subject` VARCHAR(50) NULL DEFAULT NULL,
   `title` VARCHAR(50) NULL DEFAULT NULL,
   `timestamp` TIME NULL DEFAULT NULL,
+  `mentorEmail` VARCHAR(200) NULL DEFAULT NULL,
+  `category` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -33,11 +35,12 @@ CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT DEFAULT NULL,
   `email` VARCHAR(50) NULL DEFAULT NULL,
   `password` VARCHAR(50) NULL DEFAULT NULL,
-  `editor` INTEGER NULL DEFAULT NULL,
+  `editor` BOOLEAN NULL DEFAULT NULL,
+  `admin` BOOLEAN NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
-insert into users set password = password('hello'), email = 'broadstreetscientific@ncssm.edu', editor = 1;
+insert into users set password = password('unicornslovescience'), email = 'broadstreetscientific@ncssm.edu', editor = 1, admin = 1;
 
 
 
